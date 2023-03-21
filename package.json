@@ -1,0 +1,17 @@
+{
+    "name": "@misterabdul/laravel-example-cicd-testing",
+    "private": true,
+    "scripts": {
+        "husky:install": "husky install",
+        "commitlint": "commitlint"
+    },
+    "lint-staged": {
+        "*.php": "./vendor/bin/pint"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^17.3.0",
+        "@commitlint/config-conventional": "^17.3.0",
+        "husky": "^8.0.2",
+        "lint-staged": "^13.1.0"
+    }
+}
