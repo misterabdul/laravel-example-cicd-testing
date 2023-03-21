@@ -1,0 +1,22 @@
+image:
+  name: misterabdul/docker-cicd-laravel:fedora37-20230221
+
+cache:
+  paths:
+    - vendor/
+    - node_modules/
+
+test:
+  script:
+    - |
+      (sudo supervisord 1>/dev/null 2>&1 && composer install 1>/dev/null 2>&1 && cp .env.example .env \
+      && php artisan key:generate 1>/dev/null && sed -ri "s/APP_ENV=.*/APP_ENV=testing/" .env \
+      && sed -ri "s/APP_DEBUG=.*/APP_DEBUG=false/" .env && sed -ri "s/APP_TIMEZONE=.*/APP_TIMEZONE=Asia\/Jakarta/" .env \
+      && sed -ri "s/APP_ACCOUNT=.*/APP_ACCOUNT=bitbucket-pipeline/" .env && sed -ri "s/LOG_LEVEL=.*/LOG_LEVEL=info/" .env \
+      && sed -ri "s/DB_CONNECTION=.*/DB_CONNECTION=pgsql/" .env && sed -ri "s/DB_HOST=.*/DB_HOST=0.0.0.0/" .env \
+      && sed -ri "s/DB_PORT=.*/DB_PORT=5432/" .env && sed -ri "s/DB_DATABASE=.*/DB_DATABASE=postgres/" .env \
+      && sed -ri "s/DB_USERNAME=.*/DB_USERNAME=postgres/" .env && sed -ri "s/DB_PASSWORD=.*/DB_PASSWORD=/" .env \
+      && sed -ri "s/REDIS_HOST=.*/REDIS_HOST=0.0.0.0/" .env && sed -ri "s/REDIS_PORT=.*/REDIS_PORT=6379/" .env \
+      && sed -ri "s/REDIS_PASSWORD=.*/REDIS_PASSWORD=/" .env && sed -ri "s/PROXY_TARGET=.*/PROXY_TARGET=0.0.0.0/" .env \
+      && cp .env .env.testing && php artisan optimize:clear 1>/dev/null && php artisan migrate:fresh \
+      && php artisan passport:install --force && php artisan test --env=testing ) || exit 1
