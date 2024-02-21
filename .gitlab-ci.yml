@@ -1,5 +1,5 @@
 image:
-  name: misterabdul/docker-cicd-laravel:fedora37-20230221
+  name: misterabdul/docker-cicd-laravel:fedora39-20240220
 
 cache:
   paths:

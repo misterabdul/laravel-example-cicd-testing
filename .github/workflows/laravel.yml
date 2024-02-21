@@ -10,7 +10,7 @@ jobs:
   laravel-tests:
     runs-on: ubuntu-22.04
     container:
-      image: misterabdul/docker-cicd-laravel:fedora37-20230221
+      image: misterabdul/docker-cicd-laravel:fedora39-20240220
       options: --user root
     steps:
       - uses: actions/checkout@v3
